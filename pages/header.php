@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - Gaming Store</title>
+    <!-- Actualizamos la ruta para que suba un nivel -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navbar -->
+        <header class="navbar">
+            <div class="logo-area">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    <h1>NEXUS</h1>
+                    <span>GAMING STORE</span>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#" class="active">Explore</a>
+                <a href="#">My Library</a>
+                <a href="#">Friends</a>
+                <a href="#">Profile</a>
+            </nav>
+
+            <div class="user-actions">
+                <div class="points">
+                    <span class="point-dot"></span> Points: 1,500
+                </div>
+                <div class="cart-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                </div>
+                <button class="login-btn">LOGIN <span>(Admin/User)</span></button>
+            </div>
+        </header>
