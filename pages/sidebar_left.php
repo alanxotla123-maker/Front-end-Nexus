@@ -17,7 +17,9 @@
                     <button class="promo-btn">VIEW OFFERS</button>
                 </div>
 
+                <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin'): ?>
                 <div class="add-game-container" style="margin-top: 20px;">
                     <button id="open-modal-btn" class="promo-btn" style="background-color: var(--text-main); color: var(--bg-dark);">+ AGREGAR JUEGO</button>
                 </div>
+                <?php endif; ?>
             </aside>

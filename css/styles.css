@@ -287,7 +287,7 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .form-row {
@@ -299,31 +299,106 @@ button { cursor: pointer; font-family: inherit; }
 label {
     display: block;
     font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
+    color: #d1d5db;
+    margin-bottom: 8px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* ── Input Group (auth-style with icon) ── */
+.input-group {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+    width: 100%;
+    background: #0f1524;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 14px 15px 14px 45px;
+    color: #f3f4f6;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: #6b7280;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: #3b82f6;
+    background: #111827;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.input-group svg {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    stroke: #6b7280;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.input-group input:focus ~ svg,
+.input-group textarea:focus ~ svg,
+.input-group select:focus ~ svg {
+    stroke: #3b82f6;
+}
+
+/* Fallback for inputs/textareas/selects outside input-group */
 input, textarea, select {
     width: 100%;
-    background-color: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
+    background-color: #0f1524;
+    border: 1px solid #1e293b;
+    color: #f3f4f6;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-family: inherit;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.3s;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #6b7280;
 }
 
 input:focus, textarea:focus, select:focus {
-    border-color: var(--accent-cyan);
+    border-color: #3b82f6;
+    background: #111827;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 textarea {
     resize: none;
     height: 80px;
+}
+
+/* Textarea icon at top instead of center */
+.input-group:has(textarea) svg {
+    top: 18px;
+    transform: none;
+}
+
+.input-group textarea {
+    padding-top: 14px;
 }
 
 /* ============================================================

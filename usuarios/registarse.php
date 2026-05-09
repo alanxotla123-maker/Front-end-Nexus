@@ -12,24 +12,34 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include("../Conexion/conexion.php");
 
+    $nombre   = mysqli_real_escape_string($conexion, $_POST['nombre']);
     $username = mysqli_real_escape_string($conexion, $_POST['username']);
     $password = mysqli_real_escape_string($conexion, $_POST['password']);
 
-    // Buscar usuario en la tabla 'usuario' o 'usuarios'
-    $sql = "INSERT INTO usuarios (username, password, rol) VALUES ('$username', '$password', 'usuario')";
-    $resultado = mysqli_query($conexion, $sql);
-
-    if ($resultado) {
-        // Guardar datos en la sesión
-        $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['username'] = $usuario['username'] ?? $usuario['usario'];
-        $_SESSION['rol'] = $usuario['rol'] ?? 'usuario';
-
-        // Redirigir al dashboard principal
-        header("Location: ../pages/index.php");
-        exit();
+    // Verificar que el usuario no exista ya
+    $check = mysqli_query($conexion, "SELECT id FROM usuarios WHERE username = '$username'");
+    if ($check && mysqli_num_rows($check) > 0) {
+        $error = "Ese nombre de usuario ya está registrado";
     } else {
-        $error = "Usuario o contraseña incorrectos";
+        // Insertar nuevo usuario
+        $sql = "INSERT INTO usuarios (username, password) VALUES ('$username', '$password')";
+        $resultado = mysqli_query($conexion, $sql);
+
+        if ($resultado) {
+            // Obtener el ID del usuario recién creado
+            $nuevo_id = mysqli_insert_id($conexion);
+
+            // Guardar datos en la sesión
+            $_SESSION['usuario_id'] = $nuevo_id;
+            $_SESSION['username']   = $username;
+            $_SESSION['rol']        = 'usuario';
+
+            // Redirigir al dashboard principal
+            header("Location: ../pages/index.php");
+            exit();
+        } else {
+            $error = "Error al registrar: " . mysqli_error($conexion);
+        }
     }
 
     mysqli_close($conexion);
@@ -41,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Store - Login</title>
+    <title>Nexus Store - Registro</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/auth.css">
 </head>
@@ -59,10 +69,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </svg>
             </div>
 
-            <h1>NEXUS LOGON</h1>
+            <h1>NEXUS REGISTRO</h1>
             <p class="login-subtitle">Crear cuenta en NEXUS</p>
 
-            <form action="login.php" method="POST">
+            <?php if ($error): ?>
+                <div class="error-msg">
+                    ⚠️ <?php echo $error; ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="registarse.php" method="POST">
                 <label>Nombre</label>
                 <div class="input-group">
                     <input type="text" name="nombre" placeholder="Ingresa tu nombre" required autofocus>
@@ -71,12 +87,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                 </div>
-                 <label>Corre:</label>
+
+                <label>Usuario</label>
                 <div class="input-group">
-                    <input type="text" name="username" placeholder="Ingresa tu usuario" required autofocus>
+                    <input type="text" name="username" placeholder="Ingresa tu usuario" required>
                     <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                 </div>
 
@@ -93,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
 
             <div class="login-footer">
-                <p>Nexus Gaming Store <a href="login.php"  style="color: #00d2ff; text-decoration: none;">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
+                <p>Nexus Gaming Store <a href="login.php" style="color: #00d2ff; text-decoration: none;">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
             </div>
         </div>
     </div>

@@ -69,12 +69,32 @@ window.vaciarCarrito = function () {
 window.procesarCompra = function () {
     if (carrito.length === 0) return;
 
-    mostrarToast('✅ ¡Compra realizada con éxito!');
-    carrito = [];
-    guardarCarrito();
-    actualizarBadge();
-    renderCarrito();
-    setTimeout(cerrarCarrito, 1500);
+    // Enviar al backend
+    fetch('../videojuegos/compra.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: carrito })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            mostrarToast(data.mensaje);
+            carrito = [];
+            guardarCarrito();
+            actualizarBadge();
+            renderCarrito();
+            setTimeout(cerrarCarrito, 1500);
+        } else {
+            mostrarToast('❌ ' + (data.mensaje || 'Error en la compra'));
+            if (data.errores && data.errores.length > 0) {
+                console.error('Errores:', data.errores);
+            }
+        }
+    })
+    .catch(err => {
+        console.error('Error al procesar compra:', err);
+        mostrarToast('❌ Error de conexión al procesar la compra');
+    });
 };
 
 // ── Persistencia ──────────────────────────────────────────────

@@ -21,6 +21,9 @@ if (isset($_SESSION['usuario_id'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        window.userRol = "<?php echo $_SESSION['rol'] ?? 'usuario'; ?>";
+    </script>
 </head>
 <body>
     <div class="app-container">

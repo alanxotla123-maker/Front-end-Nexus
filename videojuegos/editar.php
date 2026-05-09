@@ -1,6 +1,13 @@
 <?php
+session_start();
 include("../Conexion/conexion.php");
 header('Content-Type: application/json');
+
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
+    http_response_code(403);
+    echo json_encode(["status" => "error", "message" => "Acceso denegado. Solo administradores pueden editar videojuegos."]);
+    exit();
+}
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $id = $_POST["id"] ?? '';
