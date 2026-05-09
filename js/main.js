@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Variable global para usar en otros archivos si es necesario
 let videojuegos = [];
+let clasificacionActual = 'Todas';
 
-function cargarVideojuegos() {
+function cargarVideojuegos(filtro = 'Todas') {
+    clasificacionActual = filtro;
 
     fetch('../videojuegos/api_mostrar.php')
         .then(response => response.json())
@@ -17,7 +19,12 @@ function cargarVideojuegos() {
             const grid = document.querySelector('.game-grid');
             grid.innerHTML = '';
 
-            videojuegos.forEach((juego) => {
+            // Filtrar los videojuegos localmente
+            const juegosFiltrados = filtro === 'Todas' 
+                ? videojuegos 
+                : videojuegos.filter(j => j.clasificacion === filtro);
+
+            juegosFiltrados.forEach((juego) => {
                 const card = document.createElement('div');
                 card.className = 'game-card';
 
@@ -112,4 +119,17 @@ function cargarPuntos() {
             console.error('Error al cargar los puntos:', error);
         });
 }
+// Función para filtrar por clasificación desde el sidebar
+window.filtrarPorClasificacion = function(clasificacion) {
+    // Actualizar clase activa en el sidebar
+    const items = document.querySelectorAll('#classification-list li');
+    items.forEach(item => {
+        if (item.innerText.trim() === clasificacion) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
 
+    cargarVideojuegos(clasificacion);
+}

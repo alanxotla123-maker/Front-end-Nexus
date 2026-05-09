@@ -1,13 +1,18 @@
             <!-- Left Sidebar -->
             <aside class="sidebar-left">
                 <div class="categories">
-                    <h2>GAME CATEGORIES</h2>
-                    <ul>
-                        <li><span class="dot"></span> Action</li>
-                        <li><span class="dot"></span> RPG</li>
-                        <li class="active"><span class="dot"></span> Shooter</li>
-                        <li><span class="dot"></span> Indie</li>
-                        <li><span class="dot"></span> Strategy</li>
+                    <h2>GAME CLASSIFICATIONS</h2>
+                    <ul id="classification-list">
+                        <li class="active" onclick="filtrarPorClasificacion('Todas')"><span class="dot"></span> Todas</li>
+                        <?php
+                        include(__DIR__ . '/../Conexion/conexion.php');
+                        $res_class = mysqli_query($conexion, "SELECT DISTINCT clasificacion FROM videojuegos WHERE clasificacion IS NOT NULL AND clasificacion != '' ORDER BY clasificacion ASC");
+                        while ($row = mysqli_fetch_assoc($res_class)):
+                        ?>
+                            <li onclick="filtrarPorClasificacion('<?php echo $row['clasificacion']; ?>')">
+                                <span class="dot"></span> <?php echo $row['clasificacion']; ?>
+                            </li>
+                        <?php endwhile; ?>
                     </ul>
                 </div>
                 
