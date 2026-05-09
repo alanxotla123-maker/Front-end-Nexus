@@ -46,8 +46,7 @@
                 <!-- Trending Section -->
                 <section class="trending">
                     <div class="section-header">
-                        <h2>Trending Now</h2>
-                        <a href="#" class="see-all">SEE ALL GAMES</a>
+                        <h2>Todos nuestros videojuegos</h2>
                     </div>
                     <div class="game-grid">
                         <!-- El contenido se cargará dinámicamente con JS -->

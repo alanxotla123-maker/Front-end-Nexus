@@ -12,6 +12,7 @@ function cargarVideojuegos() {
     fetch('../videojuegos/api_mostrar.php')
         .then(response => response.json())
         .then(data => {
+
             videojuegos = data;
             const grid = document.querySelector('.game-grid');
             grid.innerHTML = '';
@@ -21,15 +22,18 @@ function cargarVideojuegos() {
                 card.className = 'game-card';
 
                 // Usamos la imagen de la base de datos, si no tiene, usamos una por defecto
-                const imgUrl = juego.imagen;
+                let imgUrl = juego.imagen;
+                if (!imgUrl || imgUrl.startsWith('file:///')) {
+                    imgUrl = 'https://via.placeholder.com/300x400?text=Sin+Imagen';
+                }
+
                 const rating = (Math.random() * (5 - 4) + 4).toFixed(1);
+                console.log(juego);
+                card.style.cursor = 'pointer';
+                card.onclick = () => window.location.href = 'detalles.php?id=' + juego.id;
 
                 card.innerHTML = `
-                    <div class="card-image" style="background-image: url('${juego.imagen}'); background-size: cover; position: relative;">
-                        <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 5px;">
-                            <span class="edit-btn" onclick="abrirModalEditar(${juego.id})" style="background: rgba(0,0,0,0.6); padding: 5px 8px; border-radius: 5px; cursor: pointer; color: white;">✏️</span>
-                            <span class="heart" onclick="eliminarJuego(${juego.id})" style="background: rgba(0,0,0,0.6); padding: 5px 8px; border-radius: 5px; cursor: pointer; color: white;">🗑️</span>
-                        </div>
+                    <div class="card-image" style="background-image: url('${imgUrl}'); background-size: cover; position: relative;">
                     </div>
                     <div class="card-info">
                         <div class="card-title-row">
@@ -37,9 +41,16 @@ function cargarVideojuegos() {
                             <span class="star">★ ${rating}</span>
                         </div>
                         <span class="genre">${juego.descripcion || 'General'}</span>
-                        <div class="card-bottom">   
-                            <span class="card-price">$${juego.precio}</span>
-                            <button class="add-btn">+</button>
+                        <div class="card-bottom" style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">   
+                            <span class="card-price" style="font-weight: bold; font-size: 1.1em; color: #00d2ff;">$${juego.precio}</span>
+                            <div style="display: flex; gap: 8px;">
+                                <button onclick="event.stopPropagation(); abrirModalEditar('${juego.id}')" style="background-color: #0078d4; border: none; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                </button>
+                                <button onclick="event.stopPropagation(); eliminarJuego('${juego.id}')" style="background-color: transparent; border: 2px solid #d9534f; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -68,11 +79,14 @@ window.abrirModalEditar = function (id) {
     }
 }
 
-// Función para eliminar un juego
 window.eliminarJuego = function (id) {
     if (confirm('¿Seguro que quieres eliminar este videojuego?')) {
-        videojuegos = videojuegos.filter(juego => juego.id !== id);
-        localStorage.setItem('videojuegos', JSON.stringify(videojuegos));
-        cargarVideojuegos();
+        fetch(`../videojuegos/eliminar.php?id=${parseInt(id)}`)
+            .then(response => {
+                cargarVideojuegos();
+            })
+            .catch(error => {
+                console.error('Error al eliminar el videojuego:', error);
+            });
     }
 }
