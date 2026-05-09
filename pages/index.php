@@ -25,10 +25,10 @@
 <?php include 'modal_editar.php'; ?>
 <?php include 'cart_panel.php'; ?>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/agregar.js"></script>
-    <script src="../js/editar.js"></script>
-    <script src="../js/carrito.js"></script>
+    <script src="../js/carrito.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/main.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/agregar.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/editar.js?v=<?php echo time(); ?>"></script>
     
 </body>
 </html>

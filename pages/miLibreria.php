@@ -23,8 +23,8 @@
 <?php include 'cart_panel.php'; ?>
 
     <script>window.USUARIO_ID = <?php echo isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0; ?>;</script>
-    <script src="../js/libreria.js"></script>
-    <script src="../js/carrito.js"></script>
+    <script src="../js/carrito.js?v=<?php echo time(); ?>"></script>
+    <script src="../js/libreria.js?v=<?php echo time(); ?>"></script>
     
 </body>
 </html>

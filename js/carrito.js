@@ -144,8 +144,12 @@ function renderCarrito() {
 function mostrarToast(msg) {
     const toast = document.getElementById('cart-toast');
     toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 3000);
 }
 
 // ── Init ──────────────────────────────────────────────────────
