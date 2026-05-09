@@ -9,7 +9,7 @@
                 <!-- Trending Section -->
                 <section class="trending">
                     <div class="section-header">
-                        <h2>Todos nuestros videojuegos</h2>
+                        <h2>Libreria</h2>
                     </div>
                     <div class="game-grid">
                         <!-- El contenido se cargará dinámicamente con JS -->
@@ -17,17 +17,13 @@
                 </section>
             </main>
 
-            <?php include 'sidebar_right.php'; ?>
         </div>
 
 <?php include 'footer.php'; ?>
-<?php include 'modal_agregar.php'; ?>
-<?php include 'modal_editar.php'; ?>
 <?php include 'cart_panel.php'; ?>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/agregar.js"></script>
-    <script src="../js/editar.js"></script>
+    <script>window.USUARIO_ID = <?php echo isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0; ?>;</script>
+    <script src="../js/libreria.js"></script>
     <script src="../js/carrito.js"></script>
     
 </body>

@@ -28,7 +28,6 @@ function cargarVideojuegos() {
                 }
 
                 const rating = (Math.random() * (5 - 4) + 4).toFixed(1);
-                console.log(juego);
                 card.style.cursor = 'pointer';
                 card.onclick = () => window.location.href = 'detalles.php?id=' + juego.id;
 
@@ -41,9 +40,12 @@ function cargarVideojuegos() {
                             <span class="star">★ ${rating}</span>
                         </div>
                         <span class="genre">${juego.descripcion || 'General'}</span>
-                        <div class="card-bottom" style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">   
+                        <div class="card-bottom" style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">
                             <span class="card-price" style="font-weight: bold; font-size: 1.1em; color: #00d2ff;">$${juego.precio}</span>
                             <div style="display: flex; gap: 8px;">
+                                <button class="btn-add-cart" data-id="${juego.id}" data-titulo="${juego.titulo}" data-precio="${juego.precio}" data-imagen="${juego.imagen || ''}" title="Agregar al carrito" style="background-color: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.35); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: #00f0ff;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                </button>
                                 <button onclick="event.stopPropagation(); abrirModalEditar('${juego.id}')" style="background-color: #0078d4; border: none; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                 </button>
@@ -54,6 +56,13 @@ function cargarVideojuegos() {
                         </div>
                     </div>
                 `;
+
+                // Conectar botón carrito con addEventListener (evita problemas de comillas)
+                const btnCart = card.querySelector('.btn-add-cart');
+                btnCart.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    agregarAlCarrito(juego.id, juego.titulo, juego.precio, juego.imagen || '');
+                });
 
                 grid.appendChild(card);
             });
@@ -90,3 +99,15 @@ window.eliminarJuego = function (id) {
             });
     }
 }
+function cargarPuntos() {
+    fetch('../videojuegos/api_mostrar.php')
+        .then(response => response.json())
+        .then(data => {
+            const puntos = data.puntos;
+            document.getElementById('puntos').innerText = puntos;
+        })
+        .catch(error => {
+            console.error('Error al cargar los puntos:', error);
+        });
+}
+
