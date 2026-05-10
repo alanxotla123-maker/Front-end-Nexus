@@ -38,10 +38,11 @@ if (isset($_SESSION['usuario_id'])) {
             </div>
             
             <nav class="main-nav">
-                <a href="../pages/index.php">Explore</a>
-                <a href="../pages/miLibreria.php">My Library</a>
-                <a href="../pages/amigos.php">Friends</a>
-                <a href="../pages/perfil.php">Profile</a>
+                <a href="index.php">Explore</a>
+                <a href="miLibreria.php">My Library</a>
+                <a href="mis_amigos.php">Friends</a>
+                <a href="amigos.php">Find Friends</a>
+                <a href="perfil.php">Profile</a>
             </nav>
 
             <div class="user-actions">

@@ -1,7 +1,12 @@
 // Archivo principal de JavaScript
 
 document.addEventListener('DOMContentLoaded', () => {
-    cargarVideojuegos();
+    // Solo cargar videojuegos automáticamente si estamos en la página principal
+    if (window.location.pathname.includes('index.php') || window.location.pathname.endsWith('/')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        cargarVideojuegos(filterParam || 'Todas');
+    }
 });
 
 // Variable global para usar en otros archivos si es necesario
@@ -53,14 +58,6 @@ function cargarVideojuegos(filtro = 'Todas') {
                                 <button class="btn-add-cart" data-id="${juego.id}" data-titulo="${juego.titulo}" data-precio="${juego.precio}" data-imagen="${juego.imagen || ''}" title="Agregar al carrito" style="background-color: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.35); border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: #00f0ff;">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                                 </button>
-                                ${window.userRol === 'admin' ? `
-                                <button onclick="event.stopPropagation(); abrirModalEditar('${juego.id}')" style="background-color: #0078d4; border: none; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                </button>
-                                <button onclick="event.stopPropagation(); eliminarJuego('${juego.id}')" style="background-color: transparent; border: 2px solid #d9534f; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                </button>
-                                ` : ''}
                             </div>
                         </div>
                     </div>
@@ -121,6 +118,12 @@ function cargarPuntos() {
 }
 // Función para filtrar por clasificación desde el sidebar
 window.filtrarPorClasificacion = function(clasificacion) {
+    // Si no estamos en index.php, redirigir a index.php con el filtro
+    if (!window.location.pathname.includes('index.php') && !window.location.pathname.endsWith('/pages/')) {
+        window.location.href = 'index.php?filter=' + encodeURIComponent(clasificacion);
+        return;
+    }
+
     // Actualizar clase activa en el sidebar
     const items = document.querySelectorAll('#classification-list li');
     items.forEach(item => {
