@@ -53,12 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('¡Videojuego registrado con éxito!');
                 form.reset();
                 modal.classList.remove('active');
-                
+
                 // Recargar la lista de juegos
                 if (typeof cargarVideojuegos === 'function') {
                     cargarVideojuegos();
                 } else {
-                    location.reload(); 
+                    location.reload();
                 }
             } else {
                 alert('Error: ' + result.message);

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Obtener el ID del usuario (sesión o default 1)
-$id_usuario = isset($_SESSION['usuario_id']);
+$id_usuario = isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 1;
 
 // Leer los datos del carrito enviados por JS
 $input = json_decode(file_get_contents('php://input'), true);

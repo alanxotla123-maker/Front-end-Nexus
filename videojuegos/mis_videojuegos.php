@@ -19,6 +19,6 @@ if ($resultado) {
     $videojuegos = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
     echo json_encode($videojuegos);
 } else {
-    echo json_encode([]);
+    echo json_encode(['error' => mysqli_error($conexion), 'sql' => $sql]);
 }
 ?>

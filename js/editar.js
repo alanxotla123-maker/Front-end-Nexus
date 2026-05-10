@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar modal al hacer clic fuera del contenido
     window.addEventListener('click', (e) => {
-        if (e.target === editModal) {
+        if (editModal && e.target === editModal) {
             editModal.classList.remove('active');
         }
     });

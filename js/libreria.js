@@ -11,12 +11,15 @@ function cargarMiLibreria() {
             '<p style="color: var(--text-muted); grid-column: 1/-1; text-align:center; padding: 40px 0;">🎮 Tu librería está vacía. ¡Compra juegos para verlos aquí!</p>';
     };
 
+    console.log("Cargando librería para el usuario:", userId);
+
     fetch('../videojuegos/mis_videojuegos.php?id=' + userId)
         .then(response => {
             if (!response.ok) throw new Error('Error en la respuesta');
             return response.json();
         })
         .then(data => {
+            console.log("Datos de librería recibidos:", data);
             grid.innerHTML = '';
 
             if (!data || !Array.isArray(data) || data.length === 0) {
