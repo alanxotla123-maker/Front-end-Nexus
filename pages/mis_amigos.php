@@ -10,7 +10,7 @@
         <section class="trending">
             <div class="section-header">
                 <h2>Mis Amigos</h2>
-                <span class="see-all">Tus conexiones en Nexus</span>
+                <span class="see-all">Tus conexiones en Level Up</span>
             </div>
 
             <div class="game-grid">

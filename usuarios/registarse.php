@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Store - Registro</title>
+    <title>Level Up Store - Registro</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/auth.css">
 </head>
@@ -59,18 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-wrapper">
         <div class="contenedor">
             <div class="login-icon">
-                <!-- Gamepad Icon -->
-                <svg viewBox="0 0 24 24">
-                    <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
-                    <line x1="6" y1="12" x2="10" y2="12"></line>
-                    <line x1="8" y1="10" x2="8" y2="14"></line>
-                    <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                    <line x1="18" y1="11" x2="18.01" y2="11"></line>
-                </svg>
+                <img src="../imagenes/logo.png" alt="Level Up Logo" style="width: 60px; height: 60px; border-radius: 12px; object-fit: cover; margin-bottom: 10px;">
             </div>
 
-            <h1>NEXUS REGISTRO</h1>
-            <p class="login-subtitle">Crear cuenta en NEXUS</p>
+            <h1>LEVEL UP REGISTRO</h1>
+            <p class="login-subtitle">Crear cuenta en LEVEL UP</p>
 
             <?php if ($error): ?>
                 <div class="error-msg">
@@ -110,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
 
             <div class="login-footer">
-                <p>Nexus Gaming Store <a href="login.php" style="color: #00d2ff; text-decoration: none;">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
+                <p>Level Up Gaming Store <a href="login.php" style="color: #00d2ff; text-decoration: none;">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 // ============================================================
-//  CARRITO DE COMPRAS — Nexus Gaming Store
+//  CARRITO DE COMPRAS — Level Up Gaming Store
 // ============================================================
 
 // Estado del carrito (persistente en localStorage)
-let carrito = JSON.parse(localStorage.getItem('nexus_cart') || '[]');
+let carrito = JSON.parse(localStorage.getItem('levelup_cart') || '[]');
 
 // ── Abrir / Cerrar panel ──────────────────────────────────────
 function abrirCarrito() {
@@ -99,7 +99,7 @@ window.procesarCompra = function () {
 
 // ── Persistencia ──────────────────────────────────────────────
 function guardarCarrito() {
-    localStorage.setItem('nexus_cart', JSON.stringify(carrito));
+    localStorage.setItem('levelup_cart', JSON.stringify(carrito));
 }
 
 // ── Badge en el ícono del navbar ──────────────────────────────

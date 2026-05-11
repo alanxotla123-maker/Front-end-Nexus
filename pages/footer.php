@@ -1,7 +1,7 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="status">
-                <span class="status-dot"></span> NEXUS NETWORK ONLINE
+                <span class="status-dot"></span> LEVEL UP NETWORK ONLINE
                 <span class="servers">SERVERS: OPTIMAL</span>
             </div>
             <div class="footer-links">

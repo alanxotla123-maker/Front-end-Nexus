@@ -16,7 +16,7 @@ if (isset($_SESSION['usuario_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS - Gaming Store</title>
+    <title>LEVEL UP - Gaming Store</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,9 +30,11 @@ if (isset($_SESSION['usuario_id'])) {
         <!-- Navbar -->
         <header class="navbar">
             <div class="logo-area">
-                <div class="logo-icon">N</div>
+                <div class="logo-icon">
+                    <img src="../imagenes/logo.png" alt="Level Up Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;">
+                </div>
                 <div class="logo-text">
-                    <h1>NEXUS</h1>
+                    <h1>LEVEL UP</h1>
                     <span>GAMING STORE</span>
                 </div>
             </div>
@@ -59,16 +61,13 @@ if (isset($_SESSION['usuario_id'])) {
                         <polyline points="16 17 21 12 16 7"></polyline>
                         <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
-                    CERRAR SESIÓN
                 </a>
                 <?php else: ?>
                 <a href="../usuarios/login.php" class="logout-btn" title="Iniciar Sesión">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                        <polyline points="10 17 15 12 10 7"></polyline>
-                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    INICIAR SESIÓN
                 </a>
                 <?php endif; ?>
             </div>

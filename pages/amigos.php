@@ -10,7 +10,7 @@
         <section class="trending">
             <div class="section-header">
                 <h2>Explorar Comunidad</h2>
-                <span class="see-all">Encuentra nuevos amigos en Nexus</span>
+                <span class="see-all">Encuentra nuevos amigos en Level Up</span>
             </div>
             <div class="game-grid">
                 <?php
