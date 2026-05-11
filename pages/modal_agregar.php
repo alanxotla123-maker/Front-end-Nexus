@@ -75,6 +75,17 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label>Plataformas y Stock</label>
+                    <div id="plataformas-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px;">
+                        <div class="plataforma-row" style="display: flex; gap: 10px; align-items: center;">
+                            <input type="text" name="plataforma[]" placeholder="Ej: PS5, PC, Xbox" style="flex: 2;">
+                            <input type="number" name="stock[]" placeholder="Stock" style="flex: 1;" min="0">
+                            <button type="button" class="remove-platform" style="background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.2); color: #ff4d4d; border-radius: 6px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+                    <button type="button" id="add-platform-btn" style="background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.2); color: var(--accent-cyan); padding: 8px; border-radius: 6px; font-size: 11px; font-weight: 600; width: 100%; cursor: pointer;">+ AGREGAR PLATAFORMA</button>
+                </div>
+                <div class="form-group">
                     <label for="imagen">URL de la Imagen (Portada)</label>
                     <div class="input-group">
                         <input type="text" id="imagen" name="imagen" placeholder="../imagenes/portada.jpg">

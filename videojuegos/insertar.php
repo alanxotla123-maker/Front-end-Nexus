@@ -22,14 +22,44 @@ if ($data) {
     $video_path = mysqli_real_escape_string($conexion, $data['video_path']);
     $imagen = mysqli_real_escape_string($conexion, $data['imagen']);
 
-    $sql = "INSERT INTO videojuegos (titulo, descripcion, precio, clasificacion, video_path, imagen) 
-            VALUES ('$titulo', '$descripcion', '$precio', '$clasificacion', '$video_path', '$imagen')";
+    // Iniciar transacción
+    mysqli_begin_transaction($conexion);
 
-    if (mysqli_query($conexion, $sql)) {
-        echo json_encode(["status" => "success", "message" => "Videojuego agregado correctamente"]);
-    } else {
+    try {
+        // Ajustado según la imagen: 'trailer' en lugar de 'video_path'
+        // Si no tienes la columna 'imagen', esta consulta fallará. 
+        // Asegúrate de que tu tabla 'videojuegos' tenga: id, titulo, descripcion, precio, clasificacion, trailer, imagen
+        $sql = "INSERT INTO videojuegos (titulo, descripcion, precio, clasificacion, trailer, imagen) 
+                VALUES ('$titulo', '$descripcion', '$precio', '$clasificacion', '$video_path', '$imagen')";
+        
+        if (!mysqli_query($conexion, $sql)) {
+            throw new Exception(mysqli_error($conexion));
+        }
+
+        $id_videojuego = mysqli_insert_id($conexion);
+
+        // Insertar plataformas
+        if (isset($data['plataformas']) && is_array($data['plataformas'])) {
+            foreach ($data['plataformas'] as $plat) {
+                $nombre_plat = mysqli_real_escape_string($conexion, $plat['nombre']);
+                $stock = intval($plat['stock']);
+                
+                $sql_plat = "INSERT INTO platoforma (id_videojuegos, nombre_platorma, stock) 
+                            VALUES ($id_videojuego, '$nombre_plat', $stock)";
+                
+                if (!mysqli_query($conexion, $sql_plat)) {
+                    throw new Exception(mysqli_error($conexion));
+                }
+            }
+        }
+
+        mysqli_commit($conexion);
+        echo json_encode(["status" => "success", "message" => "Videojuego y plataformas registrados correctamente"]);
+
+    } catch (Exception $e) {
+        mysqli_rollback($conexion);
         http_response_code(500);
-        echo json_encode(["status" => "error", "message" => "Error al insertar: " . mysqli_error($conexion)]);
+        echo json_encode(["status" => "error", "message" => "Error en el registro: " . $e->getMessage()]);
     }
 } else {
     http_response_code(400);

@@ -19,14 +19,26 @@ function cargarVideojuegos(filtro = 'Todas') {
     fetch('../videojuegos/api_mostrar.php')
         .then(response => response.json())
         .then(data => {
+            if (data && data.status === 'error') {
+                console.error('Error de API:', data.message);
+                const grid = document.querySelector('.game-grid');
+                grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #ff4d4d; padding: 40px;">⚠️ Error: ${data.message}</p>`;
+                return;
+            }
 
-            videojuegos = data;
+            videojuegos = data || [];
             const grid = document.querySelector('.game-grid');
             grid.innerHTML = '';
 
+            // Si no hay juegos, mostrar un mensaje
+            if (videojuegos.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">No hay videojuegos disponibles en este momento.</p>';
+                return;
+            }
+
             // Filtrar los videojuegos localmente
-            const juegosFiltrados = filtro === 'Todas' 
-                ? videojuegos 
+            const juegosFiltrados = filtro === 'Todas'
+                ? videojuegos
                 : videojuegos.filter(j => j.clasificacion === filtro);
 
             juegosFiltrados.forEach((juego) => {
@@ -52,6 +64,9 @@ function cargarVideojuegos(filtro = 'Todas') {
                             <span class="star">★ ${rating}</span>
                         </div>
                         <span class="genre">${juego.descripcion || 'General'}</span>
+                        <div class="platforms" style="font-size: 10px; color: var(--accent-cyan); margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                            ${juego.plataformas ? '🎮 ' + juego.plataformas : 'No hay plataformas disponibles'}
+                        </div>
                         <div class="card-bottom" style="display: flex; align-items: center; justify-content: space-between; margin-top: 15px;">
                             <span class="card-price" style="font-weight: bold; font-size: 1.1em; color: #00d2ff;">$${juego.precio}</span>
                             <div style="display: flex; gap: 8px;">
@@ -117,7 +132,7 @@ function cargarPuntos() {
         });
 }
 // Función para filtrar por clasificación desde el sidebar
-window.filtrarPorClasificacion = function(clasificacion) {
+window.filtrarPorClasificacion = function (clasificacion) {
     // Si no estamos en index.php, redirigir a index.php con el filtro
     if (!window.location.pathname.includes('index.php') && !window.location.pathname.endsWith('/pages/')) {
         window.location.href = 'index.php?filter=' + encodeURIComponent(clasificacion);

@@ -2,16 +2,25 @@
 include("../Conexion/conexion.php");
 header('Content-Type: application/json');
 
-$sql = "SELECT * FROM videojuegos";
-$resultado = mysqli_query($conexion, $sql);
-
 $videojuegos = array();
-if ($resultado) {
+try {
+    $sql = "SELECT v.*, GROUP_CONCAT(p.nombre_plaforma SEPARATOR ', ') as plataformas 
+            FROM videojuegos v 
+            LEFT JOIN platormas p ON v.id = p.id_videojuego
+            GROUP BY v.id";
+    $resultado = mysqli_query($conexion, $sql);
+    if (!$resultado) {
+        echo json_encode(["status" => "error", "message" => mysqli_error($conexion)]);
+        exit();
+    }
     while($fila = mysqli_fetch_assoc($resultado)) {
         $videojuegos[] = $fila;
     }
+} catch (Exception $e) {
+    echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+    exit();
 }
 
-echo json_encode($videojuegos);
+echo json_encode(!empty($videojuegos) ? $videojuegos : null);
 $conexion->close();
 ?>
