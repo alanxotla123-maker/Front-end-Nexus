@@ -32,7 +32,7 @@
 
                 if ($res_sugeridos && mysqli_num_rows($res_sugeridos) > 0) {
                     while ($user = mysqli_fetch_assoc($res_sugeridos)) {
-                        if (isset($user['rol']) && $user['rol'] === 'admin') continue;
+                        if (isset($user['rol']) && $user['rol'] == 1) continue;
                         
                         $avatar_url = "https://api.dicebear.com/7.x/avataaars/svg?seed=" . urlencode($user['nombre']);
                         $user_puntos = number_format($user['puntos'] ?? 0);

@@ -34,18 +34,18 @@ function cerrarCarrito() {
 }
 
 // ── Agregar al carrito ────────────────────────────────────────
-window.agregarAlCarrito = function (id, titulo, precio, imagen) {
-    const item = carrito.find(i => i.id == id);
+window.agregarAlCarrito = function (id, titulo, precio, imagen, plataforma) {
+    const item = carrito.find(i => i.id == id && i.plataforma == plataforma);
 
     if (item) {
-        mostrarToast(`⚠️ ${titulo} ya está en el carrito`);
+        mostrarToast(`⚠️ ${titulo} (${plataforma}) ya está en el carrito`);
         return;
     }
 
-    carrito.push({ id, titulo, precio: parseFloat(precio), imagen, cantidad: 1 });
+    carrito.push({ id, titulo, precio: parseFloat(precio), imagen, plataforma, cantidad: 1 });
     guardarCarrito();
     actualizarBadge();
-    mostrarToast(`🎮 ${titulo} agregado al carrito`);
+    mostrarToast(`🎮 ${titulo} (${plataforma}) agregado al carrito`);
 };
 
 // ── Eliminar item ─────────────────────────────────────────────
@@ -141,6 +141,7 @@ function renderCarrito() {
             <div class="cart-item-img" style="background-image:url('${imgUrl}')"></div>
             <div class="cart-item-info">
                 <h4 class="cart-item-title">${item.titulo}</h4>
+                <span style="font-size: 11px; color: var(--accent-cyan);">${item.plataforma}</span>
                 <span class="cart-item-price">$${item.precio.toFixed(2)}</span>
             </div>
             <button class="cart-item-remove" onclick="eliminarDelCarrito('${item.id}')" title="Eliminar">

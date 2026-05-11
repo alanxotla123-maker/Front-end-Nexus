@@ -22,7 +22,7 @@ if (isset($_SESSION['usuario_id'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-        window.userRol = "<?php echo $_SESSION['rol'] ?? 'usuario'; ?>";
+        window.userRol = <?php echo (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] === 'admin')) ? 1 : 0; ?>;
     </script>
 </head>
 <body>

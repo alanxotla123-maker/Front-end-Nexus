@@ -4,7 +4,7 @@ include("../Conexion/conexion.php");
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
+if (!isset($_SESSION['rol']) || !($_SESSION['rol'] == 1 || $_SESSION['rol'] === 'admin')) {
     http_response_code(403);
     echo json_encode(["status" => "error", "message" => "Acceso denegado. Solo administradores pueden eliminar videojuegos."]);
     exit();

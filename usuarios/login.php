@@ -22,10 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($resultado && mysqli_num_rows($resultado) > 0) {
         $usuario = mysqli_fetch_assoc($resultado);
 
+        // Normalizar el rol para que admin sea 1 y todo lo demás sea 0
+        $rolUsuario = $usuario['rol'] ?? $usuario['role'] ?? 0;
+        if ($rolUsuario === 'admin' || $rolUsuario === 1 || $rolUsuario === '1') {
+            $rolUsuario = 1;
+        } else {
+            $rolUsuario = 0;
+        }
+
         // Guardar datos en la sesión
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['username'] = $usuario['username'] ?? $usuario['usario'];
-        $_SESSION['rol'] = $usuario['rol'] ?? 'admin';
+        $_SESSION['rol'] = $rolUsuario;
 
         // Redirigir al dashboard principal
         header("Location: ../pages/index.php");

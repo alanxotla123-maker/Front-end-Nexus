@@ -86,6 +86,13 @@
                         </svg>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Plataformas y Stock</label>
+                    <div id="edit-plataformas-container" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px;">
+                        <!-- Se llenará dinámicamente con las plataformas actuales -->
+                    </div>
+                    <button type="button" id="edit-add-platform-btn" style="background: rgba(0,240,255,0.05); border: 1px solid rgba(0,240,255,0.2); color: var(--accent-cyan); padding: 8px; border-radius: 6px; font-size: 11px; font-weight: 600; width: 100%; cursor: pointer;">+ AGREGAR PLATAFORMA</button>
+                </div>
                 <button type="submit" class="btn-solid" style="width: 100%; margin-top: 10px;">ACTUALIZAR VIDEOJUEGO</button>
             </form>
         </div>

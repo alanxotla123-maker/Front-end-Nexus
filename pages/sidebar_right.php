@@ -35,7 +35,7 @@
                 
                 if ($res_sugeridos) {
                     while ($u = mysqli_fetch_assoc($res_sugeridos)) {
-                        if (isset($u['rol']) && $u['rol'] === 'admin') continue;
+                        if (isset($u['rol']) && $u['rol'] == 1) continue;
                         $u['es_amigo'] = false;
                         $usuarios_sugeridos[] = $u;
                         if (count($usuarios_sugeridos) >= 5) break;

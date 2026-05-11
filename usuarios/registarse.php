@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Ese nombre de usuario ya está registrado";
     } else {
         // Insertar nuevo usuario
-        $sql = "INSERT INTO usuarios (username, password) VALUES ('$username', '$password')";
+        $sql = "INSERT INTO usuarios (username, password, role) VALUES ('$username', '$password', 0)";
         $resultado = mysqli_query($conexion, $sql);
 
         if ($resultado) {
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Guardar datos en la sesión
             $_SESSION['usuario_id'] = $nuevo_id;
             $_SESSION['username']   = $username;
-            $_SESSION['rol']        = 'usuario';
+            $_SESSION['rol']        = 0;
 
             // Redirigir al dashboard principal
             header("Location: ../pages/index.php");

@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 $videojuegos = array();
 try {
-    $sql = "SELECT v.*, GROUP_CONCAT(p.nombre_plaforma SEPARATOR ', ') as plataformas 
+    $sql = "SELECT v.*, GROUP_CONCAT(CONCAT(p.nombre_plaforma, ':', p.stock) SEPARATOR '|') as plataformas_info 
             FROM videojuegos v 
             LEFT JOIN platormas p ON v.id = p.id_videojuego
             GROUP BY v.id";

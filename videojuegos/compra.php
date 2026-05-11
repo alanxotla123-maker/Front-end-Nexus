@@ -49,6 +49,14 @@ foreach ($items as $item) {
     
     if (mysqli_query($conexion, $sql)) {
         $comprados++;
+        
+        // --- DESCONTAR STOCK ---
+        if (isset($item['plataforma'])) {
+            $plat_nombre = mysqli_real_escape_string($conexion, $item['plataforma']);
+            $sql_stock = "UPDATE platormas SET stock = stock - 1 
+                          WHERE id_videojuego = $id_videojuego AND nombre_plaforma = '$plat_nombre' AND stock > 0";
+            mysqli_query($conexion, $sql_stock);
+        }
     } else {
         $errores[] = "Error al comprar juego ID $id_videojuego: " . mysqli_error($conexion);
     }

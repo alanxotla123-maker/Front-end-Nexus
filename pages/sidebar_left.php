@@ -1,5 +1,10 @@
             <!-- Left Sidebar -->
             <aside class="sidebar-left">
+                <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] === 'admin')): ?>
+                <div class="admin-actions" style="margin-bottom: 20px;">
+                    <button id="open-modal-btn" class="promo-btn" style="width: 100%; background: linear-gradient(135deg, #ff6b6b, #ee5a24); border: none; color: white; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">Agregar Nuevo Juego</button>
+                </div>
+                <?php endif; ?>
                 <div class="categories">
                     <h2>GAME CLASSIFICATIONS</h2>
                     <ul id="classification-list">

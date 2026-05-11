@@ -4,7 +4,7 @@ include("../Conexion/conexion.php");
 header('Content-Type: application/json');
 
 // Verificar si el usuario es admin
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
+if (!isset($_SESSION['rol']) || !($_SESSION['rol'] == 1 || $_SESSION['rol'] === 'admin')) {
     http_response_code(403);
     echo json_encode(["status" => "error", "message" => "Acceso denegado. Solo administradores pueden agregar videojuegos."]);
     exit();
@@ -27,9 +27,10 @@ if ($data) {
 
     try {
         // Ajustado según la imagen: 'trailer' en lugar de 'video_path'
+        // Ajustado según la imagen: 'video_path' en lugar de 'trailer'
         // Si no tienes la columna 'imagen', esta consulta fallará. 
-        // Asegúrate de que tu tabla 'videojuegos' tenga: id, titulo, descripcion, precio, clasificacion, trailer, imagen
-        $sql = "INSERT INTO videojuegos (titulo, descripcion, precio, clasificacion, trailer, imagen) 
+        // Asegúrate de que tu tabla 'videojuegos' tenga: id, titulo, descripcion, precio, clasificacion, video_path, imagen
+        $sql = "INSERT INTO videojuegos (titulo, descripcion, precio, clasificacion, video_path, imagen) 
                 VALUES ('$titulo', '$descripcion', '$precio', '$clasificacion', '$video_path', '$imagen')";
         
         if (!mysqli_query($conexion, $sql)) {
